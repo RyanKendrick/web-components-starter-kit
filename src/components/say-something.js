@@ -43,10 +43,18 @@ class Button extends HTMLElement {
     this._shadowRoot.appendChild(template.content.cloneNode(true));
 
     this.$button. = this._shadowRoot.querySelector('button');
+
+    this.$button.addEventListner('click', () => {
+      this.onClick('Hello from within custom element')
+    });
   }
 
   get label() {
     return this.getAttribute('label');
+  }
+
+  set label(value) {
+    this.setAttribute('label');
   }
 
   static get observedAttributes() {
