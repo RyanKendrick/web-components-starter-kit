@@ -35,50 +35,31 @@ template.innerHTML = `
   </div>
 `;
 
-class SaySomething extends HTMLElement {
+class Button extends HTMLElement {
   constructor() {
     super();
 
     this._shadowRoot = this.attachShadow({ mode: 'open' });
     this._shadowRoot.appendChild(template.content.cloneNode(true));
 
-    this.$headline = this._shadowRoot.querySelector('h2');
-    this.$span = this._shadowRoot.querySelector('span');
+    this.$button. = this._shadowRoot.querySelector('button');
   }
 
-  connectedCallback() {
-    if(!this.hasAttribute('color')) {
-      this.setAttribute('color', 'orange');
-    }
-
-    if(!this.hasAttribute('text')) {
-      this.setAttribute('text', '');
-    }
-
-    this._render();
+  get label() {
+    return this.getAttribute('label');
   }
 
   static get observedAttributes() {
-    return ['color', 'text'];
+    return ['label'];
   }
 
   attributeChangedCallback(name, oldVal, newVal) {
-    switch(name) {
-      case 'color':
-        this._color = newVal;
-        break;
-      case 'text':
-        this._text = newVal;
-        break;
-    };
-
-    this._render();
+    this.render();
   }
 
-  _render() {
-    this.$headline.style.color = this._color;
-    this.$span.innerHTML = this._text;
+  render() {
+    this.$button.innerHTML = this.label;
   }
 }
 
-window.customElements.define('say-something', SaySomething);
+window.customElements.define('my-button', Button);
